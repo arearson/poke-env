@@ -115,3 +115,5 @@ venv.bak/
 
 # PyCharm
 .idea/
+/examples/policy/
+/examples/checkpoint/
