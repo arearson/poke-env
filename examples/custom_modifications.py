@@ -256,7 +256,7 @@ async def main():
             battle_format="gen8randombattle",
             opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
             # use_old_gym_api=False
-        )),gym_wrapper.GymWrapper(SimpleRLPlayer(
+        )), gym_wrapper.GymWrapper(SimpleRLPlayer(
             battle_format="gen8randombattle",
             opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
             # use_old_gym_api=False
@@ -342,7 +342,7 @@ async def main():
 
     batch_size = 64  # @param {type:"integer"}
     learning_rate = 1e-3  # @param {type:"number"}
-    epsilon_greedy = 0.4
+    epsilon_greedy = 0.2
     gamma = 0.75
     log_interval = 200  # @param {type:"integer"}
 
@@ -420,7 +420,7 @@ async def main():
 
     driver.run()
     iterator = iter(dataset)
-    for trainers in [0, 1, 2]:
+    for trainers in [2, 2, 2]:
         for envs in train_env.envs:
             if trainers == 1:
                 trainer = MaxBasePowerPlayer(battle_format="gen8randombattle")
@@ -429,7 +429,7 @@ async def main():
             else:
                 continue
             envs.reset_env(opponent=trainer)
-        for _ in range(512):
+        for _ in range([64, 512, 64][trainers]):
             for _ in range(512):
                 drivers.dynamic_step_driver.DynamicStepDriver(
                     env=train_env, policy=dqn.collect_policy,
@@ -438,10 +438,11 @@ async def main():
                 trajectories, _ = next(iterator)
                 dqn.train(experience=trajectories)
             checkpointer.save(train_step_counter)
-            print(train_step_counter.numpy())
+            print(train_step_counter.numpy(), '\t')
             for envs in train_env.envs:
-                print(envs.n_won_battles, envs.n_finished_battles,
-                      f'{envs.n_won_battles / envs.n_finished_battles * 100:0.1f}%', end='\t\t')
+                print(envs.n_finished_battles, f'{envs.n_won_battles / envs.n_finished_battles * 100:0.1f}%',
+                      end='\t\t')
+            print()
         tf_policy_saver.save(policy_dir)
 
     tf_policy_saver.save(policy_dir)
