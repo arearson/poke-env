@@ -21,8 +21,8 @@ async def main():
     start = time.time()
 
     # We create two players.
-    random_player = RandomPlayer(battle_format="gen8randombattle")
-    max_damage_player = MaxDamagePlayer(battle_format="gen8randombattle")
+    random_player = RandomPlayer(battle_format="gen9randombattle")
+    max_damage_player = MaxDamagePlayer(battle_format="gen9randombattle")
 
     # Now, let's evaluate our player
     await max_damage_player.battle_against(random_player, n_battles=100)

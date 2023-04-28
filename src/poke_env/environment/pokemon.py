@@ -347,7 +347,7 @@ class Pokemon:
             self._status_counter = 0
 
     def _terastallize(self, type_):
-        self._terastallize_type = PokemonType.from_name(type_)
+        self._terastallized_type = PokemonType.from_name(type_)
         self._terastallized = True
 
     def _transform(self, into):
@@ -397,7 +397,13 @@ class Pokemon:
         level = None
 
         if len(split_details) == 3:
-            species, level, gender = split_details
+            if split_details[2].startswith('tera'):
+                if split_details[1].startswith("L"):
+                    species, level, tera = split_details
+                else:
+                    species, gender, tera = split_details
+            else:
+                species, level, gender = split_details
         elif len(split_details) == 2:
             if split_details[1].startswith("L"):
                 species, level = split_details
