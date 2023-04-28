@@ -278,6 +278,10 @@ class Battle(AbstractBattle):
         """
         return self._opponent_can_terastallize
 
+    @opponent_can_terastallize.setter
+    def opponent_can_terastallize(self, value: bool) -> None:
+        self._opponent_can_terastallize = value
+
     @property
     def opponent_can_z_move(self) -> bool:
         """

@@ -855,6 +855,11 @@ class AbstractBattle(ABC):
         pass
 
     @property
+    @abstractmethod
+    def can_terastallize(self):  # pragma: no cover
+        pass
+
+    @property
     def dynamax_turns_left(self) -> Optional[int]:
         """
         :return: How many turns of dynamax are left. None if dynamax is not active
@@ -922,6 +927,16 @@ class AbstractBattle(ABC):
     @opponent_can_dynamax.setter
     @abstractmethod
     def opponent_can_dynamax(self, value) -> None:  # pragma: no cover
+        pass
+
+    @property
+    @abstractmethod
+    def opponent_can_terastallize(self) -> bool:  # pragma: no cover
+        pass
+
+    @opponent_can_terastallize.setter
+    @abstractmethod
+    def opponent_can_terastallize(self, value) -> None:  # pragma: no cover
         pass
 
     @property
