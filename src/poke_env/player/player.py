@@ -75,7 +75,7 @@ class Player(PlayerNetwork, ABC):
         :param avatar: Player avatar id. Optional.
         :type avatar: int, optional
         :param battle_format: Name of the battle format this player plays. Defaults to
-            gen8randombattle.
+            gen9randombattle.
         :type battle_format: str
         :param log_level: The player's logger level.
         :type log_level: int. Defaults to logging's default level.
@@ -187,7 +187,7 @@ class Player(PlayerNetwork, ABC):
 
                 await self._battle_count_queue.put(None)
                 if battle_tag in self._battles:
-                    self._battle_count_queue.get()
+                    await self._battle_count_queue.get()
                     return self._battles[battle_tag]
                 async with self._battle_start_condition:
                     self._battle_semaphore.release()
@@ -215,8 +215,8 @@ class Player(PlayerNetwork, ABC):
     async def _handle_battle_message(self, split_messages: List[List[str]]) -> None:
         """Handles a battle message.
 
-        :param split_message: The received battle message.
-        :type split_message: str
+        :param split_messages: The received battle message.
+        :type split_messages: str
         """
         # Battle messages can be multiline
         if (
