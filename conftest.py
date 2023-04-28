@@ -4,7 +4,7 @@ import orjson
 from pytest import fixture
 
 
-FIXTURE_DIR = os.path.join("fixture_data")
+FIXTURE_DIR = os.path.join('..', "fixture_data")
 
 
 @fixture

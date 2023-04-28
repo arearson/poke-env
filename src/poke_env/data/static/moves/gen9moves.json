@@ -520,7 +520,7 @@
   "name": "Assist",
   "pp": 20,
   "priority": 0,
-  "flags": {},
+  "flags": {"failencore": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1},
   "onHit": "onHit",
   "secondary": null,
   "target": "self",
@@ -605,6 +605,7 @@
    "onBeforeMove": "onBeforeMove",
    "onEnd": "onEnd"
   },
+  "onTryImmunity": "onTryImmunity",
   "secondary": null,
   "target": "normal",
   "type": "Normal",
@@ -774,7 +775,7 @@
   "name": "Baddy Bad",
   "pp": 15,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {"protect": 1, "mirror": 1},
   "self": {
    "sideCondition": "reflect"
   },
@@ -791,7 +792,7 @@
   "name": "Baneful Bunker",
   "pp": 10,
   "priority": 4,
-  "flags": {},
+  "flags": {"noassist": 1, "failcopycat": 1},
   "stallingMove": true,
   "volatileStatus": "banefulbunker",
   "onPrepareHit": "onPrepareHit",
@@ -871,7 +872,7 @@
   "pp": 40,
   "priority": 0,
   "flags": {},
-  "onHit": "onHit",
+  "onTryHit": "onTryHit",
   "self": {
    "onHit": "onHit"
   },
@@ -891,7 +892,7 @@
   "name": "Beak Blast",
   "pp": 15,
   "priority": -3,
-  "flags": {"bullet": 1, "protect": 1},
+  "flags": {"bullet": 1, "protect": 1, "noassist": 1, "failmefirst": 1, "nosleeptalk": 1, "failcopycat": 1, "failinstruct": 1},
   "priorityChargeCallback": "priorityChargeCallback",
   "condition": {
    "duration": 1,
@@ -928,7 +929,7 @@
   "name": "Behemoth Bash",
   "pp": 5,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1, "mirror": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "failcopycat": 1, "failmimic": 1},
   "secondary": null,
   "target": "normal",
   "type": "Steel"
@@ -941,7 +942,7 @@
   "name": "Behemoth Blade",
   "pp": 5,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1, "mirror": 1, "slicing": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "slicing": 1, "failcopycat": 1, "failmimic": 1},
   "secondary": null,
   "target": "normal",
   "type": "Steel"
@@ -954,7 +955,7 @@
   "name": "Belch",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {"protect": 1, "failmefirst": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1},
   "onDisableMove": "onDisableMove",
   "secondary": null,
   "target": "normal",
@@ -986,7 +987,7 @@
   "name": "Bestow",
   "pp": 15,
   "priority": 0,
-  "flags": {"mirror": 1, "bypasssub": 1, "allyanim": 1},
+  "flags": {"mirror": 1, "bypasssub": 1, "allyanim": 1, "noassist": 1, "failcopycat": 1},
   "onHit": "onHit",
   "secondary": null,
   "target": "normal",
@@ -1003,7 +1004,7 @@
   "name": "Bide",
   "pp": 10,
   "priority": 1,
-  "flags": {"contact": 1, "protect": 1},
+  "flags": {"contact": 1, "protect": 1, "nosleeptalk": 1, "failinstruct": 1},
   "volatileStatus": "bide",
   "ignoreImmunity": true,
   "beforeMoveCallback": "beforeMoveCallback",
@@ -1073,7 +1074,6 @@
   "accuracy": 100,
   "basePower": 75,
   "category": "Special",
-  "isNonstandard": "Unobtainable",
   "name": "Bitter Malice",
   "pp": 10,
   "priority": 0,
@@ -1147,7 +1147,9 @@
   "name": "Blazing Torque",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {
+   "protect": 1, "failencore": 1, "failmefirst": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1
+  },
   "secondary": {
    "chance": 30,
    "status": "brn"
@@ -1380,7 +1382,9 @@
   "name": "Bounce",
   "pp": 5,
   "priority": 0,
-  "flags": {"contact": 1, "charge": 1, "protect": 1, "mirror": 1, "gravity": 1, "distance": 1},
+  "flags": {
+   "contact": 1, "charge": 1, "protect": 1, "mirror": 1, "gravity": 1, "distance": 1, "nosleeptalk": 1, "noassist": 1, "failinstruct": 1
+  },
   "onTryMove": "onTryMove",
   "condition": {
    "duration": 2,
@@ -1404,7 +1408,7 @@
   "name": "Bouncy Bubble",
   "pp": 20,
   "priority": 0,
-  "flags": {"protect": 1, "heal": 1},
+  "flags": {"protect": 1, "mirror": 1, "heal": 1},
   "drain": [1, 2],
   "secondary": null,
   "target": "normal",
@@ -1703,7 +1707,7 @@
   "name": "Buzzy Buzz",
   "pp": 20,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {"protect": 1, "mirror": 1},
   "secondary": {
    "chance": 100,
    "status": "par"
@@ -1809,7 +1813,7 @@
   "name": "Celebrate",
   "pp": 40,
   "priority": 0,
-  "flags": {},
+  "flags": {"nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1},
   "onTryHit": "onTryHit",
   "secondary": null,
   "target": "self",
@@ -1893,7 +1897,10 @@
   "name": "Chatter",
   "pp": 20,
   "priority": 0,
-  "flags": {"protect": 1, "mirror": 1, "sound": 1, "distance": 1, "bypasssub": 1},
+  "flags": {
+   "protect": 1, "mirror": 1, "sound": 1, "distance": 1, "bypasssub": 1, "nosleeptalk": 1, "noassist": 1,
+   "failcopycat": 1, "failinstruct": 1, "failmimic": 1
+  },
   "noSketch": true,
   "secondary": {
    "chance": 100,
@@ -1978,7 +1985,7 @@
   "name": "Circle Throw",
   "pp": 10,
   "priority": -6,
-  "flags": {"contact": 1, "protect": 1, "mirror": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "noassist": 1, "failcopycat": 1},
   "forceSwitch": true,
   "target": "normal",
   "type": "Fighting",
@@ -2166,7 +2173,9 @@
   "name": "Combat Torque",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {
+   "protect": 1, "failencore": 1, "failmefirst": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1
+  },
   "secondary": {
    "chance": 30,
    "status": "par"
@@ -2200,7 +2209,7 @@
   "name": "Comeuppance",
   "pp": 10,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1, "mirror": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "failmefirst": 1},
   "onTry": "onTry",
   "onModifyTarget": "onModifyTarget",
   "secondary": null,
@@ -2337,7 +2346,7 @@
   "name": "Copycat",
   "pp": 20,
   "priority": 0,
-  "flags": {},
+  "flags": {"failencore": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1},
   "onHit": "onHit",
   "secondary": null,
   "target": "self",
@@ -2458,7 +2467,7 @@
   "name": "Counter",
   "pp": 20,
   "priority": -5,
-  "flags": {"contact": 1, "protect": 1},
+  "flags": {"contact": 1, "protect": 1, "failmefirst": 1, "noassist": 1, "failcopycat": 1},
   "beforeTurnCallback": "beforeTurnCallback",
   "onTry": "onTry",
   "condition": {
@@ -2497,7 +2506,7 @@
   "name": "Covet",
   "pp": 25,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1, "mirror": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "failmefirst": 1, "noassist": 1, "failcopycat": 1},
   "onAfterHit": "onAfterHit",
   "secondary": null,
   "target": "normal",
@@ -2820,7 +2829,7 @@
   "name": "Destiny Bond",
   "pp": 5,
   "priority": 0,
-  "flags": {"bypasssub": 1},
+  "flags": {"bypasssub": 1, "noassist": 1, "failcopycat": 1},
   "volatileStatus": "destinybond",
   "onPrepareHit": "onPrepareHit",
   "condition": {
@@ -2844,7 +2853,7 @@
   "name": "Detect",
   "pp": 5,
   "priority": 4,
-  "flags": {},
+  "flags": {"noassist": 1, "failcopycat": 1},
   "stallingMove": true,
   "volatileStatus": "protect",
   "onPrepareHit": "onPrepareHit",
@@ -2900,7 +2909,7 @@
   "name": "Dig",
   "pp": 10,
   "priority": 0,
-  "flags": {"contact": 1, "charge": 1, "protect": 1, "mirror": 1, "nonsky": 1},
+  "flags": {"contact": 1, "charge": 1, "protect": 1, "mirror": 1, "nonsky": 1, "nosleeptalk": 1, "noassist": 1, "failinstruct": 1},
   "onTryMove": "onTryMove",
   "condition": {
    "duration": 2,
@@ -2996,7 +3005,9 @@
   "name": "Dive",
   "pp": 10,
   "priority": 0,
-  "flags": {"contact": 1, "charge": 1, "protect": 1, "mirror": 1, "nonsky": 1, "allyanim": 1},
+  "flags": {
+   "contact": 1, "charge": 1, "protect": 1, "mirror": 1, "nonsky": 1, "allyanim": 1, "nosleeptalk": 1, "noassist": 1, "failinstruct": 1
+  },
   "onTryMove": "onTryMove",
   "condition": {
    "duration": 2,
@@ -3050,8 +3061,7 @@
   "name": "Doom Desire",
   "pp": 5,
   "priority": 0,
-  "flags": {},
-  "isFutureMove": true,
+  "flags": {"futuremove": 1},
   "onTry": "onTry",
   "secondary": null,
   "target": "normal",
@@ -3275,7 +3285,7 @@
   "name": "Dragon Darts",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1, "mirror": 1},
+  "flags": {"protect": 1, "mirror": 1, "noparentalbond": 1},
   "multihit": 2,
   "smartTarget": true,
   "secondary": null,
@@ -3367,7 +3377,7 @@
   "name": "Dragon Tail",
   "pp": 10,
   "priority": -6,
-  "flags": {"contact": 1, "protect": 1, "mirror": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "noassist": 1, "failcopycat": 1},
   "forceSwitch": true,
   "target": "normal",
   "type": "Dragon",
@@ -3506,7 +3516,7 @@
   "name": "Dynamax Cannon",
   "pp": 5,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {"protect": 1, "failencore": 1, "nosleeptalk": 1, "noparentalbond": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1},
   "secondary": null,
   "target": "normal",
   "type": "Dragon"
@@ -3782,7 +3792,7 @@
   "name": "Encore",
   "pp": 5,
   "priority": 0,
-  "flags": {"protect": 1, "reflectable": 1, "mirror": 1, "bypasssub": 1},
+  "flags": {"protect": 1, "reflectable": 1, "mirror": 1, "bypasssub": 1, "failencore": 1},
   "volatileStatus": "encore",
   "condition": {
    "duration": 3,
@@ -3809,7 +3819,7 @@
   "name": "Endeavor",
   "pp": 5,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1, "mirror": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "noparentalbond": 1},
   "onTryImmunity": "onTryImmunity",
   "secondary": null,
   "target": "normal",
@@ -3826,7 +3836,7 @@
   "name": "Endure",
   "pp": 10,
   "priority": 4,
-  "flags": {},
+  "flags": {"noassist": 1, "failcopycat": 1},
   "stallingMove": true,
   "volatileStatus": "endure",
   "onPrepareHit": "onPrepareHit",
@@ -3956,7 +3966,7 @@
   "name": "Explosion",
   "pp": 5,
   "priority": 0,
-  "flags": {"protect": 1, "mirror": 1},
+  "flags": {"protect": 1, "mirror": 1, "noparentalbond": 1},
   "selfdestruct": "always",
   "secondary": null,
   "target": "allAdjacent",
@@ -4158,7 +4168,7 @@
   "name": "Feint",
   "pp": 10,
   "priority": 2,
-  "flags": {"mirror": 1},
+  "flags": {"mirror": 1, "noassist": 1, "failcopycat": 1},
   "breaksProtect": true,
   "secondary": null,
   "target": "normal",
@@ -4262,7 +4272,7 @@
   "name": "Final Gambit",
   "pp": 5,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {"protect": 1, "noparentalbond": 1},
   "secondary": null,
   "target": "normal",
   "type": "Fighting",
@@ -4336,7 +4346,7 @@
   "name": "Fire Pledge",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1, "mirror": 1, "nonsky": 1},
+  "flags": {"protect": 1, "mirror": 1, "nonsky": 1, "pledgecombo": 1},
   "onPrepareHit": "onPrepareHit",
   "onModifyMove": "onModifyMove",
   "condition": {
@@ -4624,7 +4634,7 @@
   "name": "Fling",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1, "mirror": 1, "allyanim": 1},
+  "flags": {"protect": 1, "mirror": 1, "allyanim": 1, "noparentalbond": 1},
   "onPrepareHit": "onPrepareHit",
   "condition": {
    "onUpdate": "onUpdate"
@@ -4657,7 +4667,7 @@
   "name": "Floaty Fall",
   "pp": 15,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1, "gravity": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "gravity": 1},
   "secondary": {
    "chance": 30,
    "volatileStatus": "flinch"
@@ -4722,7 +4732,9 @@
   "name": "Fly",
   "pp": 15,
   "priority": 0,
-  "flags": {"contact": 1, "charge": 1, "protect": 1, "mirror": 1, "gravity": 1, "distance": 1},
+  "flags": {
+   "contact": 1, "charge": 1, "protect": 1, "mirror": 1, "gravity": 1, "distance": 1, "nosleeptalk": 1, "noassist": 1, "failinstruct": 1
+  },
   "onTryMove": "onTryMove",
   "condition": {
    "duration": 2,
@@ -4797,7 +4809,7 @@
   "name": "Focus Punch",
   "pp": 20,
   "priority": -3,
-  "flags": {"contact": 1, "protect": 1, "punch": 1},
+  "flags": {"contact": 1, "protect": 1, "punch": 1, "failmefirst": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1},
   "priorityChargeCallback": "priorityChargeCallback",
   "beforeMoveCallback": "beforeMoveCallback",
   "condition": {
@@ -4819,7 +4831,7 @@
   "name": "Follow Me",
   "pp": 20,
   "priority": 2,
-  "flags": {},
+  "flags": {"noassist": 1, "failcopycat": 1},
   "volatileStatus": "followme",
   "onTry": "onTry",
   "condition": {
@@ -4934,7 +4946,7 @@
   "name": "Freeze Shock",
   "pp": 5,
   "priority": 0,
-  "flags": {"charge": 1, "protect": 1, "mirror": 1},
+  "flags": {"charge": 1, "protect": 1, "mirror": 1, "nosleeptalk": 1, "failinstruct": 1},
   "onTryMove": "onTryMove",
   "secondary": {
    "chance": 30,
@@ -4969,7 +4981,7 @@
   "name": "Freezy Frost",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {"protect": 1, "mirror": 1},
   "onHit": "onHit",
   "secondary": null,
   "target": "normal",
@@ -5117,9 +5129,8 @@
   "name": "Future Sight",
   "pp": 10,
   "priority": 0,
-  "flags": {},
+  "flags": {"allyanim": 1, "futuremove": 1},
   "ignoreImmunity": true,
-  "isFutureMove": true,
   "onTry": "onTry",
   "secondary": null,
   "target": "normal",
@@ -5212,7 +5223,7 @@
   "name": "Geomancy",
   "pp": 10,
   "priority": 0,
-  "flags": {"charge": 1, "nonsky": 1},
+  "flags": {"charge": 1, "nonsky": 1, "nosleeptalk": 1, "failinstruct": 1},
   "onTryMove": "onTryMove",
   "boosts": {
    "spa": 2,
@@ -5372,7 +5383,7 @@
   "name": "Glitzy Glow",
   "pp": 15,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {"protect": 1, "mirror": 1},
   "self": {
    "sideCondition": "lightscreen"
   },
@@ -6069,7 +6080,7 @@
   "name": "Grass Pledge",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1, "mirror": 1, "nonsky": 1},
+  "flags": {"protect": 1, "mirror": 1, "nonsky": 1, "pledgecombo": 1},
   "onPrepareHit": "onPrepareHit",
   "onModifyMove": "onModifyMove",
   "condition": {
@@ -6110,7 +6121,7 @@
   "name": "Grassy Glide",
   "pp": 20,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1},
   "onModifyPriority": "onModifyPriority",
   "secondary": null,
   "target": "normal",
@@ -6716,7 +6727,7 @@
   "name": "Helping Hand",
   "pp": 20,
   "priority": 5,
-  "flags": {"bypasssub": 1},
+  "flags": {"bypasssub": 1, "noassist": 1, "failcopycat": 1},
   "volatileStatus": "helpinghand",
   "onTryHit": "onTryHit",
   "condition": {
@@ -7074,7 +7085,7 @@
   "name": "Hold Hands",
   "pp": 40,
   "priority": 0,
-  "flags": {"bypasssub": 1},
+  "flags": {"bypasssub": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1},
   "secondary": null,
   "target": "adjacentAlly",
   "type": "Normal",
@@ -7212,6 +7223,20 @@
   "target": "normal",
   "type": "Water",
   "contestType": "Beautiful"
+ },
+ "hydrosteam": {
+  "num": 876,
+  "accuracy": 100,
+  "basePower": 80,
+  "category": "Special",
+  "name": "Hydro Steam",
+  "pp": 15,
+  "priority": 0,
+  "flags": {"protect": 1, "mirror": 1, "defrost": 1},
+  "thawsTarget": true,
+  "secondary": null,
+  "target": "normal",
+  "type": "Water"
  },
  "hydrovortex": {
   "num": 642,
@@ -7354,7 +7379,7 @@
   "name": "Ice Ball",
   "pp": 20,
   "priority": 0,
-  "flags": {"bullet": 1, "contact": 1, "protect": 1, "mirror": 1},
+  "flags": {"bullet": 1, "contact": 1, "protect": 1, "mirror": 1, "noparentalbond": 1, "failinstruct": 1},
   "onModifyMove": "onModifyMove",
   "onAfterMove": "onAfterMove",
   "condition": {
@@ -7394,7 +7419,7 @@
   "name": "Ice Burn",
   "pp": 5,
   "priority": 0,
-  "flags": {"charge": 1, "protect": 1, "mirror": 1},
+  "flags": {"charge": 1, "protect": 1, "mirror": 1, "nosleeptalk": 1, "failinstruct": 1},
   "onTryMove": "onTryMove",
   "secondary": {
    "chance": 30,
@@ -7552,7 +7577,7 @@
   "name": "Imprison",
   "pp": 10,
   "priority": 0,
-  "flags": {"snatch": 1, "bypasssub": 1},
+  "flags": {"snatch": 1, "bypasssub": 1, "mustpressure": 1},
   "volatileStatus": "imprison",
   "condition": {
    "noCopy": true,
@@ -7562,7 +7587,6 @@
    "onFoeBeforeMove": "onFoeBeforeMove"
   },
   "secondary": null,
-  "pressureTarget": "foeSide",
   "target": "self",
   "type": "Psychic",
   "zMove": {"boost": {"spd": 2}},
@@ -7680,7 +7704,7 @@
   "name": "Instruct",
   "pp": 15,
   "priority": 0,
-  "flags": {"protect": 1, "bypasssub": 1, "allyanim": 1},
+  "flags": {"protect": 1, "bypasssub": 1, "allyanim": 1, "failinstruct": 1},
   "onHit": "onHit",
   "secondary": null,
   "target": "normal",
@@ -7884,7 +7908,7 @@
   "name": "King's Shield",
   "pp": 10,
   "priority": 4,
-  "flags": {},
+  "flags": {"noassist": 1, "failcopycat": 1, "failinstruct": 1},
   "stallingMove": true,
   "volatileStatus": "kingsshield",
   "onPrepareHit": "onPrepareHit",
@@ -8510,7 +8534,9 @@
   "name": "Magical Torque",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {
+   "protect": 1, "failencore": 1, "failmefirst": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1
+  },
   "secondary": {
    "chance": 30,
    "volatileStatus": "confusion"
@@ -8714,7 +8740,7 @@
   "name": "Mat Block",
   "pp": 10,
   "priority": 0,
-  "flags": {"snatch": 1, "nonsky": 1},
+  "flags": {"snatch": 1, "nonsky": 1, "noassist": 1, "failcopycat": 1},
   "stallingMove": true,
   "sideCondition": "matblock",
   "onTry": "onTry",
@@ -9124,7 +9150,10 @@
   "name": "Me First",
   "pp": 20,
   "priority": 0,
-  "flags": {"protect": 1, "bypasssub": 1},
+  "flags": {
+   "protect": 1, "bypasssub": 1,
+   "failencore": 1, "failmefirst": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1
+  },
   "onTryHit": "onTryHit",
   "condition": {
    "duration": 1,
@@ -9241,7 +9270,7 @@
   "name": "Metal Burst",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1, "mirror": 1},
+  "flags": {"protect": 1, "mirror": 1, "failmefirst": 1},
   "onTry": "onTry",
   "onModifyTarget": "onModifyTarget",
   "secondary": null,
@@ -9297,7 +9326,7 @@
   "name": "Meteor Assault",
   "pp": 5,
   "priority": 0,
-  "flags": {"protect": 1, "recharge": 1, "mirror": 1},
+  "flags": {"protect": 1, "recharge": 1, "mirror": 1, "failinstruct": 1},
   "self": {
    "volatileStatus": "mustrecharge"
   },
@@ -9348,7 +9377,7 @@
   "name": "Metronome",
   "pp": 10,
   "priority": 0,
-  "flags": {},
+  "flags": {"failencore": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1},
   "noMetronome": [
    "After You", "Apple Acid", "Armor Cannon", "Assist", "Astral Barrage", "Aura Wheel", "Baneful Bunker", "Beak Blast", "Behemoth Bash", "Behemoth Blade", "Belch", "Bestow", "Blazing Torque", "Body Press", "Branch Poke", "Breaking Swipe", "Celebrate", "Chatter", "Chilling Water", "Chilly Reception", "Clangorous Soul", "Collision Course", "Combat Torque", "Comeuppance", "Copycat", "Counter", "Covet", "Crafty Shield", "Decorate", "Destiny Bond", "Detect", "Diamond Storm", "Doodle", "Double Iron Bash", "Double Shock", "Dragon Ascent", "Dragon Energy", "Drum Beating", "Dynamax Cannon", "Electro Drift", "Endure", "Eternabeam", "False Surrender", "Feint", "Fiery Wrath", "Fillet Away", "Fleur Cannon", "Focus Punch", "Follow Me", "Freeze Shock", "Freezing Glare", "Glacial Lance", "Grav Apple", "Helping Hand", "Hold Hands", "Hyper Drill", "Hyperspace Fury", "Hyperspace Hole", "Ice Burn", "Instruct", "Jet Punch", "Jungle Healing", "King's Shield", "Life Dew", "Light of Ruin", "Magical Torque", "Make It Rain", "Mat Block", "Me First", "Meteor Assault", "Metronome", "Mimic", "Mind Blown", "Mirror Coat", "Mirror Move", "Moongeist Beam", "Nature Power", "Nature's Madness", "Noxious Torque", "Obstruct", "Order Up", "Origin Pulse", "Overdrive", "Photon Geyser", "Plasma Fists", "Population Bomb", "Pounce", "Power Shift", "Precipice Blades", "Protect", "Pyro Ball", "Quash", "Quick Guard", "Rage Fist", "Rage Powder", "Raging Bull", "Raging Fury", "Relic Song", "Revival Blessing", "Ruination", "Salt Cure", "Secret Sword", "Shed Tail", "Shell Trap", "Silk Trap", "Sketch", "Sleep Talk", "Snap Trap", "Snarl", "Snatch", "Snore", "Snowscape", "Spectral Thief", "Spicy Extract", "Spiky Shield", "Spirit Break", "Spotlight", "Springtide Storm", "Steam Eruption", "Steel Beam", "Strange Steam", "Struggle", "Sunsteel Strike", "Surging Strikes", "Switcheroo", "Techno Blast", "Thief", "Thousand Arrows", "Thousand Waves", "Thunder Cage", "Thunderous Kick", "Tidy Up", "Trailblaze", "Transform", "Trick", "Twin Beam", "V-create", "Wicked Blow", "Wicked Torque", "Wide Guard"
   ],
@@ -9382,7 +9411,10 @@
   "name": "Mimic",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1, "bypasssub": 1, "allyanim": 1},
+  "flags": {
+   "protect": 1, "bypasssub": 1, "allyanim": 1,
+   "failencore": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1
+  },
   "onHit": "onHit",
   "secondary": null,
   "target": "normal",
@@ -9483,7 +9515,7 @@
   "name": "Mirror Coat",
   "pp": 20,
   "priority": -5,
-  "flags": {"protect": 1},
+  "flags": {"protect": 1, "failmefirst": 1, "noassist": 1},
   "beforeTurnCallback": "beforeTurnCallback",
   "onTry": "onTry",
   "condition": {
@@ -9508,7 +9540,7 @@
   "name": "Mirror Move",
   "pp": 20,
   "priority": 0,
-  "flags": {},
+  "flags": {"failencore": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1},
   "onTryHit": "onTryHit",
   "secondary": null,
   "target": "normal",
@@ -9548,7 +9580,7 @@
   "sideCondition": "mist",
   "condition": {
    "duration": 5,
-   "onBoost": "onBoost",
+   "onTryBoost": "onTryBoost",
    "onSideStart": "onSideStart",
    "onSideResidualOrder": 26,
    "onSideResidualSubOrder": 4,
@@ -9932,7 +9964,7 @@
   "name": "Nature Power",
   "pp": 20,
   "priority": 0,
-  "flags": {},
+  "flags": {"failencore": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1},
   "onTryHit": "onTryHit",
   "secondary": null,
   "target": "normal",
@@ -10115,7 +10147,9 @@
   "name": "Noxious Torque",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {
+   "protect": 1, "failencore": 1, "failmefirst": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1
+  },
   "secondary": {
    "chance": 30,
    "status": "psn"
@@ -10165,7 +10199,7 @@
   "name": "Obstruct",
   "pp": 10,
   "priority": 4,
-  "flags": {},
+  "flags": {"failinstruct": 1},
   "stallingMove": true,
   "volatileStatus": "obstruct",
   "onPrepareHit": "onPrepareHit",
@@ -10291,9 +10325,8 @@
   "name": "Order Up",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1, "pulse": 1, "mirror": 1},
-  "onUseMoveMessage": "onUseMoveMessage",
-  "onAfterMove": "onAfterMove",
+  "flags": {"protect": 1},
+  "onAfterMoveSecondarySelf": "onAfterMoveSecondarySelf",
   "secondary": null,
   "hasSheerForce": true,
   "target": "normal",
@@ -10320,7 +10353,7 @@
   "name": "Outrage",
   "pp": 10,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1, "mirror": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "failinstruct": 1},
   "self": {
    "volatileStatus": "lockedmove"
   },
@@ -10517,7 +10550,7 @@
   "name": "Petal Dance",
   "pp": 10,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1, "mirror": 1, "dance": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "dance": 1, "failinstruct": 1},
   "self": {
    "volatileStatus": "lockedmove"
   },
@@ -10535,7 +10568,7 @@
   "name": "Phantom Force",
   "pp": 10,
   "priority": 0,
-  "flags": {"contact": 1, "charge": 1, "mirror": 1},
+  "flags": {"contact": 1, "charge": 1, "mirror": 1, "nosleeptalk": 1, "noassist": 1, "failinstruct": 1},
   "breaksProtect": true,
   "onTryMove": "onTryMove",
   "condition": {
@@ -10574,7 +10607,7 @@
   "name": "Pika Papow",
   "pp": 20,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {"protect": 1, "mirror": 1},
   "secondary": null,
   "target": "normal",
   "type": "Electric",
@@ -11081,7 +11114,7 @@
   "name": "Protect",
   "pp": 10,
   "priority": 4,
-  "flags": {},
+  "flags": {"noassist": 1, "failcopycat": 1},
   "stallingMove": true,
   "volatileStatus": "protect",
   "onPrepareHit": "onPrepareHit",
@@ -11114,6 +11147,20 @@
   "target": "normal",
   "type": "Psychic",
   "contestType": "Beautiful"
+ },
+ "psyblade": {
+  "num": 875,
+  "accuracy": 100,
+  "basePower": 80,
+  "category": "Physical",
+  "name": "Psyblade",
+  "pp": 15,
+  "priority": 0,
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "slicing": 1},
+  "secondary": null,
+  "onBasePower": "onBasePower",
+  "target": "normal",
+  "type": "Psychic"
  },
  "psychup": {
   "num": 244,
@@ -11525,7 +11572,7 @@
   "name": "Rage Powder",
   "pp": 20,
   "priority": 2,
-  "flags": {"powder": 1},
+  "flags": {"powder": 1, "noassist": 1, "failcopycat": 1},
   "volatileStatus": "ragepowder",
   "onTry": "onTry",
   "condition": {
@@ -11655,7 +11702,7 @@
   "name": "Razor Wind",
   "pp": 10,
   "priority": 0,
-  "flags": {"charge": 1, "protect": 1, "mirror": 1},
+  "flags": {"charge": 1, "protect": 1, "mirror": 1, "nosleeptalk": 1, "failinstruct": 1},
   "onTryMove": "onTryMove",
   "critRatio": 2,
   "secondary": null,
@@ -11912,7 +11959,7 @@
   "name": "Roar",
   "pp": 20,
   "priority": -6,
-  "flags": {"reflectable": 1, "mirror": 1, "sound": 1, "bypasssub": 1, "allyanim": 1},
+  "flags": {"reflectable": 1, "mirror": 1, "sound": 1, "bypasssub": 1, "allyanim": 1, "noassist": 1, "failcopycat": 1},
   "forceSwitch": true,
   "secondary": null,
   "target": "normal",
@@ -12121,7 +12168,7 @@
   "name": "Rollout",
   "pp": 20,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1, "mirror": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "noparentalbond": 1, "failinstruct": 1},
   "onModifyMove": "onModifyMove",
   "onAfterMove": "onAfterMove",
   "condition": {
@@ -12279,6 +12326,7 @@
   "priority": 0,
   "flags": {"protect": 1, "mirror": 1},
   "condition": {
+   "noCopy": true,
    "onStart": "onStart",
    "onResidualOrder": 13,
    "onResidual": "onResidual",
@@ -12366,7 +12414,7 @@
   "name": "Sappy Seed",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1, "reflectable": 1},
+  "flags": {"protect": 1, "reflectable": 1, "mirror": 1},
   "onHit": "onHit",
   "secondary": null,
   "target": "normal",
@@ -12624,7 +12672,7 @@
   "name": "Self-Destruct",
   "pp": 5,
   "priority": 0,
-  "flags": {"protect": 1, "mirror": 1},
+  "flags": {"protect": 1, "mirror": 1, "noparentalbond": 1},
   "selfdestruct": "always",
   "secondary": null,
   "target": "allAdjacent",
@@ -12693,7 +12741,7 @@
   "name": "Shadow Force",
   "pp": 5,
   "priority": 0,
-  "flags": {"contact": 1, "charge": 1, "mirror": 1},
+  "flags": {"contact": 1, "charge": 1, "mirror": 1, "nosleeptalk": 1, "noassist": 1, "failinstruct": 1},
   "breaksProtect": true,
   "onTryMove": "onTryMove",
   "condition": {
@@ -12877,7 +12925,7 @@
   "name": "Shell Trap",
   "pp": 5,
   "priority": -3,
-  "flags": {"protect": 1},
+  "flags": {"protect": 1, "failmefirst": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1},
   "priorityChargeCallback": "priorityChargeCallback",
   "onTryMove": "onTryMove",
   "condition": {
@@ -13082,7 +13130,7 @@
   "name": "Sizzly Slide",
   "pp": 20,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1, "defrost": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "defrost": 1},
   "secondary": {
    "chance": 100,
    "status": "brn"
@@ -13101,7 +13149,9 @@
   "pp": 1,
   "noPPBoosts": true,
   "priority": 0,
-  "flags": {"bypasssub": 1, "allyanim": 1},
+  "flags": {
+   "bypasssub": 1, "allyanim": 1, "failencore": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1
+  },
   "onHit": "onHit",
   "noSketch": true,
   "secondary": null,
@@ -13154,7 +13204,7 @@
   "name": "Skull Bash",
   "pp": 10,
   "priority": 0,
-  "flags": {"contact": 1, "charge": 1, "protect": 1, "mirror": 1},
+  "flags": {"contact": 1, "charge": 1, "protect": 1, "mirror": 1, "nosleeptalk": 1, "failinstruct": 1},
   "onTryMove": "onTryMove",
   "secondary": null,
   "target": "normal",
@@ -13169,7 +13219,7 @@
   "name": "Sky Attack",
   "pp": 5,
   "priority": 0,
-  "flags": {"charge": 1, "protect": 1, "mirror": 1, "distance": 1},
+  "flags": {"charge": 1, "protect": 1, "mirror": 1, "distance": 1, "nosleeptalk": 1, "failinstruct": 1},
   "critRatio": 2,
   "onTryMove": "onTryMove",
   "secondary": {
@@ -13189,7 +13239,9 @@
   "name": "Sky Drop",
   "pp": 10,
   "priority": 0,
-  "flags": {"contact": 1, "charge": 1, "protect": 1, "mirror": 1, "gravity": 1, "distance": 1},
+  "flags": {
+   "contact": 1, "charge": 1, "protect": 1, "mirror": 1, "gravity": 1, "distance": 1, "nosleeptalk": 1, "noassist": 1, "failinstruct": 1
+  },
   "onModifyMove": "onModifyMove",
   "onMoveFail": "onMoveFail",
   "onTry": "onTry",
@@ -13297,7 +13349,7 @@
   "name": "Sleep Talk",
   "pp": 10,
   "priority": 0,
-  "flags": {},
+  "flags": {"failencore": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1},
   "sleepUsable": true,
   "onTry": "onTry",
   "onHit": "onHit",
@@ -13487,7 +13539,7 @@
   "name": "Snatch",
   "pp": 10,
   "priority": 4,
-  "flags": {"bypasssub": 1},
+  "flags": {"bypasssub": 1, "mustpressure": 1, "noassist": 1, "failcopycat": 1},
   "volatileStatus": "snatch",
   "condition": {
    "duration": 1,
@@ -13496,7 +13548,6 @@
    "onAnyPrepareHit": "onAnyPrepareHit"
   },
   "secondary": null,
-  "pressureTarget": "foeSide",
   "target": "self",
   "type": "Dark",
   "zMove": {"boost": {"spe": 2}},
@@ -13590,7 +13641,7 @@
   "name": "Solar Beam",
   "pp": 10,
   "priority": 0,
-  "flags": {"charge": 1, "protect": 1, "mirror": 1},
+  "flags": {"charge": 1, "protect": 1, "mirror": 1, "nosleeptalk": 1, "failinstruct": 1},
   "onTryMove": "onTryMove",
   "onBasePower": "onBasePower",
   "secondary": null,
@@ -13606,7 +13657,7 @@
   "name": "Solar Blade",
   "pp": 10,
   "priority": 0,
-  "flags": {"contact": 1, "charge": 1, "protect": 1, "mirror": 1, "slicing": 1},
+  "flags": {"contact": 1, "charge": 1, "protect": 1, "mirror": 1, "slicing": 1, "nosleeptalk": 1, "failinstruct": 1},
   "onTryMove": "onTryMove",
   "onBasePower": "onBasePower",
   "secondary": null,
@@ -13707,7 +13758,7 @@
   "name": "Sparkly Swirl",
   "pp": 5,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {"protect": 1, "mirror": 1},
   "self": {
    "onHit": "onHit"
   },
@@ -13807,7 +13858,7 @@
   "name": "Spikes",
   "pp": 20,
   "priority": 0,
-  "flags": {"reflectable": 1, "nonsky": 1},
+  "flags": {"reflectable": 1, "nonsky": 1, "mustpressure": 1},
   "sideCondition": "spikes",
   "condition": {
    "onSideStart": "onSideStart",
@@ -13828,7 +13879,7 @@
   "name": "Spiky Shield",
   "pp": 10,
   "priority": 4,
-  "flags": {},
+  "flags": {"noassist": 1, "failcopycat": 1},
   "stallingMove": true,
   "volatileStatus": "spikyshield",
   "onPrepareHit": "onPrepareHit",
@@ -13976,7 +14027,7 @@
   "name": "Splishy Splash",
   "pp": 15,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {"protect": 1, "mirror": 1},
   "secondary": {
    "chance": 30,
    "status": "par"
@@ -14010,7 +14061,7 @@
   "name": "Spotlight",
   "pp": 15,
   "priority": 3,
-  "flags": {"protect": 1, "reflectable": 1, "allyanim": 1},
+  "flags": {"protect": 1, "reflectable": 1, "allyanim": 1, "noassist": 1, "failcopycat": 1},
   "volatileStatus": "spotlight",
   "onTryHit": "onTryHit",
   "condition": {
@@ -14052,7 +14103,7 @@
   "name": "Stealth Rock",
   "pp": 20,
   "priority": 0,
-  "flags": {"reflectable": 1},
+  "flags": {"reflectable": 1, "mustpressure": 1},
   "sideCondition": "stealthrock",
   "condition": {
    "onSideStart": "onSideStart",
@@ -14167,7 +14218,6 @@
    "onEntryHazard": "onEntryHazard"
   },
   "secondary": null,
-  "pressureTarget": "self",
   "target": "foeSide",
   "type": "Bug",
   "zMove": {"boost": {"spe": 1}},
@@ -14386,7 +14436,10 @@
   "pp": 1,
   "noPPBoosts": true,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1},
+  "flags": {
+   "contact": 1, "protect": 1,
+   "failencore": 1, "failmefirst": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1
+  },
   "noSketch": true,
   "onModifyMove": "onModifyMove",
   "struggleRecoil": true,
@@ -14425,6 +14478,7 @@
   "flags": {"snatch": 1},
   "onDisableMove": "onDisableMove",
   "onTry": "onTry",
+  "onHit": "onHit",
   "secondary": null,
   "target": "self",
   "type": "Normal"
@@ -14738,7 +14792,7 @@
   "name": "Switcheroo",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1, "mirror": 1, "allyanim": 1},
+  "flags": {"protect": 1, "mirror": 1, "allyanim": 1, "noassist": 1, "failcopycat": 1},
   "onTryImmunity": "onTryImmunity",
   "onHit": "onHit",
   "secondary": null,
@@ -15101,7 +15155,7 @@
   "name": "Tera Blast",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1, "mirror": 1},
+  "flags": {"protect": 1, "mirror": 1, "mustpressure": 1},
   "onModifyType": "onModifyType",
   "onModifyMove": "onModifyMove",
   "secondary": null,
@@ -15133,7 +15187,7 @@
   "name": "Thief",
   "pp": 25,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1, "mirror": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "failmefirst": 1, "noassist": 1, "failcopycat": 1},
   "onAfterHit": "onAfterHit",
   "secondary": null,
   "target": "normal",
@@ -15183,7 +15237,7 @@
   "name": "Thrash",
   "pp": 10,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1, "mirror": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1, "failinstruct": 1},
   "self": {
    "volatileStatus": "lockedmove"
   },
@@ -15477,7 +15531,7 @@
   "name": "Toxic Spikes",
   "pp": 20,
   "priority": 0,
-  "flags": {"reflectable": 1, "nonsky": 1},
+  "flags": {"reflectable": 1, "nonsky": 1, "mustpressure": 1},
   "sideCondition": "toxicspikes",
   "condition": {
    "onSideStart": "onSideStart",
@@ -15539,7 +15593,7 @@
   "name": "Transform",
   "pp": 10,
   "priority": 0,
-  "flags": {"allyanim": 1},
+  "flags": {"allyanim": 1, "failencore": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1},
   "onHit": "onHit",
   "secondary": null,
   "target": "normal",
@@ -15572,7 +15626,7 @@
   "name": "Trick",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1, "mirror": 1, "allyanim": 1},
+  "flags": {"protect": 1, "mirror": 1, "allyanim": 1, "noassist": 1, "failcopycat": 1},
   "onTryImmunity": "onTryImmunity",
   "onHit": "onHit",
   "secondary": null,
@@ -15829,7 +15883,7 @@
   "name": "Uproar",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1, "mirror": 1, "sound": 1, "bypasssub": 1},
+  "flags": {"protect": 1, "mirror": 1, "sound": 1, "bypasssub": 1, "nosleeptalk": 1, "failinstruct": 1},
   "self": {
    "volatileStatus": "uproar"
   },
@@ -15895,7 +15949,7 @@
   "name": "Veevee Volley",
   "pp": 20,
   "priority": 0,
-  "flags": {"contact": 1, "protect": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1},
   "secondary": null,
   "target": "normal",
   "type": "Normal",
@@ -16085,7 +16139,7 @@
   "name": "Water Pledge",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1, "mirror": 1, "nonsky": 1},
+  "flags": {"protect": 1, "mirror": 1, "nonsky": 1, "pledgecombo": 1},
   "onPrepareHit": "onPrepareHit",
   "onModifyMove": "onModifyMove",
   "condition": {
@@ -16230,7 +16284,7 @@
   "name": "Whirlwind",
   "pp": 20,
   "priority": -6,
-  "flags": {"reflectable": 1, "mirror": 1, "bypasssub": 1, "allyanim": 1, "wind": 1},
+  "flags": {"reflectable": 1, "mirror": 1, "bypasssub": 1, "allyanim": 1, "wind": 1, "noassist": 1, "failcopycat": 1},
   "forceSwitch": true,
   "secondary": null,
   "target": "normal",
@@ -16261,7 +16315,9 @@
   "name": "Wicked Torque",
   "pp": 10,
   "priority": 0,
-  "flags": {"protect": 1},
+  "flags": {
+   "protect": 1, "failencore": 1, "failmefirst": 1, "nosleeptalk": 1, "noassist": 1, "failcopycat": 1, "failinstruct": 1, "failmimic": 1
+  },
   "secondary": {
    "chance": 10,
    "status": "slp"
@@ -16604,7 +16660,7 @@
   "name": "Zippy Zap",
   "pp": 10,
   "priority": 2,
-  "flags": {"contact": 1, "protect": 1},
+  "flags": {"contact": 1, "protect": 1, "mirror": 1},
   "secondary": {
    "chance": 100,
    "self": {
