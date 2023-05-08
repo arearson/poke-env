@@ -31,7 +31,7 @@ class Battle(AbstractBattle):
         self._opponent_can_dynamax = True
         self._opponent_can_mega_evolve = True
         self._opponent_can_z_move = True
-        self._opponent_can_terastallize: bool = False
+        self._opponent_can_terastallize: bool = True
         self._force_switch: bool = False
         self._maybe_trapped: bool = False
         self._trapped: bool = False

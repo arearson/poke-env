@@ -16,7 +16,7 @@ from tabulate import tabulate
 from tf_agents import drivers, train
 from tf_agents.agents.dqn.dqn_agent import DqnAgent
 from tf_agents.agents.categorical_dqn import categorical_dqn_agent
-from tf_agents.networks import sequential, categorical_q_network
+from tf_agents.networks import sequential, categorical_q_network, NestFlatten
 from tf_agents.policies import policy_saver
 from tf_agents.policies.random_py_policy import RandomPyPolicy
 from tf_agents.policies.random_tf_policy import RandomTFPolicy
@@ -26,7 +26,7 @@ from tf_agents.utils import common
 from tf_agents.environments import tf_py_environment, gym_wrapper, py_environment, FlattenObservationsWrapper, \
     validate_py_environment, parallel_py_environment, batched_py_environment
 
-from examples.ai_players import SimpleRLPlayer
+from examples.ai_players import SimpleRLPlayer, SimpleGen9RLPlayer
 # import tensorflow.compat.v1 as tf
 
 
@@ -66,9 +66,9 @@ async def main():
     #     opponent=opponent, start_challenging=True,
     #     # use_old_gym_api=False
     # )
-    opponent2 = RandomPlayer(battle_format="gen8randombattle", max_concurrent_battles=10)
-    eval_env = SimpleRLPlayer(
-        battle_format="gen8randombattle",
+    opponent2 = RandomPlayer(battle_format="gen9randombattle", max_concurrent_battles=10)
+    eval_env = SimpleGen9RLPlayer(
+        battle_format="gen9randombattle",
         opponent=opponent2, start_challenging=True,
         # use_old_gym_api=False
     )
@@ -112,46 +112,69 @@ async def main():
         # print(tensor_spec.from_spec(train_env.observation_spec()))
         return pyenv
 
+    # train_env = batched_py_environment.BatchedPyEnvironment([
+    #     gym_wrapper.GymWrapper(SimpleRLPlayer(
+    #         battle_format="gen8randombattle",
+    #         opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
+    #         # use_old_gym_api=False
+    #     )),
+    #     gym_wrapper.GymWrapper(SimpleRLPlayer(
+    #         battle_format="gen8randombattle",
+    #         opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
+    #         # use_old_gym_api=False
+    #     )),
+    #     gym_wrapper.GymWrapper(SimpleRLPlayer(
+    #         battle_format="gen8randombattle",
+    #         opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
+    #         # use_old_gym_api=False
+    #     )),
+    #     gym_wrapper.GymWrapper(SimpleRLPlayer(
+    #         battle_format="gen8randombattle",
+    #         opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
+    #         # use_old_gym_api=False
+    #     )), gym_wrapper.GymWrapper(SimpleRLPlayer(
+    #         battle_format="gen8randombattle",
+    #         opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
+    #         # use_old_gym_api=False
+    #     )),
+    #     gym_wrapper.GymWrapper(SimpleRLPlayer(
+    #         battle_format="gen8randombattle",
+    #         opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
+    #         # use_old_gym_api=False
+    #     )),
+    #     gym_wrapper.GymWrapper(SimpleRLPlayer(
+    #         battle_format="gen8randombattle",
+    #         opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
+    #         # use_old_gym_api=False
+    #     )),
+    #     gym_wrapper.GymWrapper(SimpleRLPlayer(
+    #         battle_format="gen8randombattle",
+    #         opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
+    #         # use_old_gym_api=False
+    #     ))])
+
     train_env = batched_py_environment.BatchedPyEnvironment([
-        gym_wrapper.GymWrapper(SimpleRLPlayer(
-            battle_format="gen8randombattle",
-            opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
+        gym_wrapper.GymWrapper(SimpleGen9RLPlayer(
+            battle_format="gen9randombattle",
+            opponent=RandomPlayer(battle_format="gen9randombattle"), start_challenging=True,
             # use_old_gym_api=False
         )),
-        gym_wrapper.GymWrapper(SimpleRLPlayer(
-            battle_format="gen8randombattle",
-            opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
+        gym_wrapper.GymWrapper(SimpleGen9RLPlayer(
+            battle_format="gen9randombattle",
+            opponent=RandomPlayer(battle_format="gen9randombattle"), start_challenging=True,
             # use_old_gym_api=False
         )),
-        gym_wrapper.GymWrapper(SimpleRLPlayer(
-            battle_format="gen8randombattle",
-            opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
+        gym_wrapper.GymWrapper(SimpleGen9RLPlayer(
+            battle_format="gen9randombattle",
+            opponent=RandomPlayer(battle_format="gen9randombattle"), start_challenging=True,
             # use_old_gym_api=False
         )),
-        gym_wrapper.GymWrapper(SimpleRLPlayer(
-            battle_format="gen8randombattle",
-            opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
-            # use_old_gym_api=False
-        )), gym_wrapper.GymWrapper(SimpleRLPlayer(
-            battle_format="gen8randombattle",
-            opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
+        gym_wrapper.GymWrapper(SimpleGen9RLPlayer(
+            battle_format="gen9randombattle",
+            opponent=RandomPlayer(battle_format="gen9randombattle"), start_challenging=True,
             # use_old_gym_api=False
         )),
-        gym_wrapper.GymWrapper(SimpleRLPlayer(
-            battle_format="gen8randombattle",
-            opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
-            # use_old_gym_api=False
-        )),
-        gym_wrapper.GymWrapper(SimpleRLPlayer(
-            battle_format="gen8randombattle",
-            opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
-            # use_old_gym_api=False
-        )),
-        gym_wrapper.GymWrapper(SimpleRLPlayer(
-            battle_format="gen8randombattle",
-            opponent=RandomPlayer(battle_format="gen8randombattle"), start_challenging=True,
-            # use_old_gym_api=False
-        ))])
+    ])
 
     train_env = tf_py_environment.TFPyEnvironment(train_env, check_dims=True, isolation=False)
 
@@ -212,7 +235,7 @@ async def main():
 
     initial_collect_steps = 1000  # @param {type:"integer"}
     collect_steps_per_iteration = 1  # @param {type:"integer"}
-    replay_buffer_capacity = 100000  # @param {type:"integer"}
+    replay_buffer_capacity = 10000  # @param {type:"integer"}
 
     fc_layer_params = (128, 64)
 
@@ -225,7 +248,7 @@ async def main():
     num_atoms = 51  # @param {type:"integer"}
     min_q_value = -20  # @param {type:"integer"}
     max_q_value = 20  # @param {type:"integer"}
-    n_step_update = 2  # @param {type:"integer"}
+    n_step_update = 5  # @param {type:"integer"}
 
     num_eval_episodes = 10  # @param {type:"integer"}
     eval_interval = 1000  # @param {type:"integer"}
@@ -245,12 +268,25 @@ async def main():
     #     td_errors_loss_fn=common.element_wise_huber_loss,
     #     gamma=gamma,
     #     train_step_counter=train_step_counter)
+    preprocessing_layers = {
+        # 'image': tf.keras.models.Sequential([tf.keras.layers.Conv2D(8, 4),
+        #                                      tf.keras.layers.Flatten()]),
+        # 'vector': tf.keras.layers.Dense(5),
+        'events': tf.keras.layers.Flatten(),
+        'mons': tf.keras.layers.Flatten(),
+        'o_mons': tf.keras.layers.Flatten(),
+        'moves': tf.keras.layers.Flatten(),
+    }
+    preprocessing_combiner = tf.keras.layers.Concatenate(axis=-1)
 
     categorical_q_net = categorical_q_network.CategoricalQNetwork(
-        train_env.observation_spec(),
-        train_env.action_spec(),
+        input_tensor_spec=train_env.observation_spec(),
+        action_spec=train_env.action_spec(),
         num_atoms=num_atoms,
-        fc_layer_params=fc_layer_params)
+        fc_layer_params=fc_layer_params,
+        preprocessing_layers=preprocessing_layers,
+        preprocessing_combiner=preprocessing_combiner,
+    )
 
     dqn = categorical_dqn_agent.CategoricalDqnAgent(
         train_env.time_step_spec(),
@@ -296,12 +332,12 @@ async def main():
 
     driver.run()
     iterator = iter(dataset)
-    for trainers in [2, 2, 2]:
+    for trainers in [0, 1]:
         for envs in train_env.envs:
             if trainers == 1:
-                trainer = MaxBasePowerPlayer(battle_format="gen8randombattle")
+                trainer = MaxBasePowerPlayer(battle_format="gen9randombattle")
             elif trainers == 2:
-                trainer = SimpleHeuristicsPlayer(battle_format="gen8randombattle")
+                trainer = SimpleHeuristicsPlayer(battle_format="gen9randombattle")
             else:
                 continue
             envs.reset_env(opponent=trainer)
