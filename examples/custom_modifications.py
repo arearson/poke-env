@@ -66,7 +66,7 @@ async def main():
     #     opponent=opponent, start_challenging=True,
     #     # use_old_gym_api=False
     # )
-    opponent2 = RandomPlayer(battle_format="gen9randombattle", max_concurrent_battles=10)
+    opponent2 = RandomPlayer(battle_format="gen9randombattle")
     eval_env = SimpleGen9RLPlayer(
         battle_format="gen9randombattle",
         opponent=opponent2, start_challenging=True,
@@ -108,7 +108,7 @@ async def main():
         # print(train_env.time_step_spec())
         # train_env = batched_py_environment.BatchedPyEnvironment([train_env])
         # validate_py_environment(env)
-        pyenv = tf_py_environment.TFPyEnvironment(pyenv)
+        pyenv = tf_py_environment.TFPyEnvironment(pyenv, isolation=True)
         # print(tensor_spec.from_spec(train_env.observation_spec()))
         return pyenv
 
@@ -237,20 +237,20 @@ async def main():
     collect_steps_per_iteration = 1  # @param {type:"integer"}
     replay_buffer_capacity = 10000  # @param {type:"integer"}
 
-    fc_layer_params = (128, 64)
+    fc_layer_params = (256, 128)
 
-    batch_size = 64  # @param {type:"integer"}
+    batch_size = 256  # @param {type:"integer"}
     learning_rate = 1e-3  # @param {type:"number"}
-    epsilon_greedy = 0.2
-    gamma = 0.75
+    epsilon_greedy = 0.1
+    gamma = 0.99
     log_interval = 200  # @param {type:"integer"}
 
     num_atoms = 51  # @param {type:"integer"}
     min_q_value = -20  # @param {type:"integer"}
     max_q_value = 20  # @param {type:"integer"}
-    n_step_update = 5  # @param {type:"integer"}
+    n_step_update = 2  # @param {type:"integer"}
 
-    num_eval_episodes = 10  # @param {type:"integer"}
+    num_eval_episodes = 1  # @param {type:"integer"}
     eval_interval = 1000  # @param {type:"integer"}
     optimizer = tf.keras.optimizers.legacy.Adam(learning_rate=learning_rate)
     # optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
@@ -272,10 +272,14 @@ async def main():
         # 'image': tf.keras.models.Sequential([tf.keras.layers.Conv2D(8, 4),
         #                                      tf.keras.layers.Flatten()]),
         # 'vector': tf.keras.layers.Dense(5),
-        'events': tf.keras.layers.Flatten(),
-        'mons': tf.keras.layers.Flatten(),
-        'o_mons': tf.keras.layers.Flatten(),
-        'moves': tf.keras.layers.Flatten(),
+        'events': tf.keras.layers.Dense(2),
+        'mons': tf.keras.models.Sequential([tf.keras.layers.Flatten(), tf.keras.layers.Dense(32)]),
+        'mon_types': tf.keras.layers.Flatten(),
+        'hp': tf.keras.layers.Dense(6),
+        'o_mons': tf.keras.models.Sequential([tf.keras.layers.Flatten(), tf.keras.layers.Dense(32)]),
+        'o_mon_types': tf.keras.layers.Flatten(),
+        'o_hp': tf.keras.layers.Dense(6),
+        'moves': tf.keras.models.Sequential([tf.keras.layers.Flatten(), tf.keras.layers.Dense(32)]),
     }
     preprocessing_combiner = tf.keras.layers.Concatenate(axis=-1)
 
@@ -332,7 +336,7 @@ async def main():
 
     driver.run()
     iterator = iter(dataset)
-    for trainers in [0, 1]:
+    for trainers in [1]:
         for envs in train_env.envs:
             if trainers == 1:
                 trainer = MaxBasePowerPlayer(battle_format="gen9randombattle")
@@ -341,11 +345,11 @@ async def main():
             else:
                 continue
             envs.reset_env(opponent=trainer)
-        for _ in range([64, 512, 64][trainers]):
+        for _ in range([128, 128, 64][trainers]):
             for _ in range(512):
                 drivers.dynamic_step_driver.DynamicStepDriver(
                     env=train_env, policy=dqn.collect_policy,
-                    observers=[replay_buffer.add_batch], num_steps=1
+                    observers=[replay_buffer.add_batch], num_steps=collect_steps_per_iteration
                 ).run()
                 trajectories, _ = next(iterator)
                 dqn.train(experience=trajectories)
@@ -377,7 +381,7 @@ async def main():
     )
 
     # Second eval
-    second_opponent = MaxBasePowerPlayer(battle_format="gen8randombattle")
+    second_opponent = MaxBasePowerPlayer(battle_format="gen9randombattle")
     eval_env.envs[0].reset_env(restart=True, opponent=second_opponent)
     print("Results against max base power player:")
     driver_eval1 = drivers.dynamic_episode_driver.DynamicEpisodeDriver(
@@ -415,9 +419,9 @@ async def main():
     n_challenges = 50
     players = [
         eval_env.envs[0].agent,
-        RandomPlayer(battle_format="gen8randombattle"),
-        MaxBasePowerPlayer(battle_format="gen8randombattle"),
-        SimpleHeuristicsPlayer(battle_format="gen8randombattle"),
+        RandomPlayer(battle_format="gen9randombattle"),
+        MaxBasePowerPlayer(battle_format="gen9randombattle"),
+        # SimpleHeuristicsPlayer(battle_format="gen9randombattle"),
     ]
     cross_eval_task = background_cross_evaluate(players, n_challenges)
     # dqn.test(

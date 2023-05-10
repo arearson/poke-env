@@ -9,7 +9,7 @@ from tf_agents.environments.gym_wrapper import GymWrapper
 from tf_agents.policies.random_tf_policy import RandomTFPolicy
 from tf_agents.specs import tensor_spec
 
-from poke_env.environment import AbstractBattle, MoveCategory
+from poke_env.environment import AbstractBattle, MoveCategory, PokemonType
 from poke_env.player import (
     Gen8EnvSinglePlayer,
     Gen9EnvSinglePlayer,
@@ -17,6 +17,8 @@ from poke_env.player import (
     RandomPlayer,
     ObservationType,
 )
+
+POKETYPECOUNT = len(PokemonType)
 
 
 class SimpleRLPlayer(Gen8EnvSinglePlayer, SimpleHeuristicsPlayer):
@@ -145,6 +147,7 @@ class SimpleRLPlayer(Gen8EnvSinglePlayer, SimpleHeuristicsPlayer):
 
 
 class SimpleGen9RLPlayer(Gen9EnvSinglePlayer, SimpleRLPlayer):
+
     def calc_reward(self, last_battle, current_battle) -> float:
         return self.reward_computing_helper(
             current_battle, fainted_value=4.0, hp_value=1.0, victory_value=30.0
@@ -172,33 +175,50 @@ class SimpleGen9RLPlayer(Gen9EnvSinglePlayer, SimpleRLPlayer):
     @staticmethod
     def embed_mons(pkm):
         # pprint.pp(pkm._data.pokedex[pkm.species])
-        pk_dex = np.zeros(1010, dtype=np.int64)
-        pk_dex[pkm._data.pokedex[pkm.species]['num'] - 1] = 1
+        pk_dex = np.zeros(1010, dtype=np.float32)
+        pk_dex[pkm._data.pokedex[pkm.species]['num'] - 1] = 1.
         return pk_dex
 
     @staticmethod
     def embed_moves(move):
         # pprint.pp(pkm._data.pokedex[pkm.species])
-        move_dex = np.zeros(1000, dtype=np.int32)
-        move_dex[move.entry['num'] - 1] = 1
+        move_dex = np.zeros(1000, dtype=np.float32)
+        move_dex[move.entry['num'] - 1] = 1.
         return move_dex
 
+    @staticmethod
+    def embed_poke_type(mon):
+        # pprint.pp(pkm._data.pokedex[pkm.species])
+        types = np.zeros(POKETYPECOUNT, dtype=np.float32)
+        for mon_type in mon.types:
+            if mon_type is not None:
+                types[mon_type.value - 1] = 1.
+        return types
+
     def embed_battle(self, battle: AbstractBattle) -> ObservationType:
-        moves = -np.ones((6, 4, 1000), dtype=np.int32)
-        mons = -np.ones((6, 1010), dtype=np.int32)
+        moves = -np.ones((6, 4, 1000), dtype=np.float32)
+        mons = -np.ones((6, 1010), dtype=np.float32)
+        hp = -np.ones(6, dtype=np.float32)
+        mon_types = -np.ones((6, POKETYPECOUNT), dtype=np.float32)
         for i, mon in enumerate([battle.active_pokemon, *battle.available_switches]):
             if mon.fainted:
                 continue
             mons[i] = self.embed_mons(mon)
+            hp[i] = mon.current_hp_fraction
+            mon_types[i] = self.embed_poke_type(mon)
             for j, move in enumerate(mon.moves.values()):
                 if move.current_pp > 0:
                     moves[i, j] = self.embed_moves(move)
 
-        o_mons = -np.ones((6, 1010), dtype=np.int32)
+        o_mons = -np.ones((6, 1010), dtype=np.float32)
+        o_hp = -np.ones(6, dtype=np.float32)
+        o_mon_types = -np.ones((6, POKETYPECOUNT), dtype=np.float32)
         for i, mon in enumerate(battle.opponent_team.values()):
             if mon.fainted:
                 continue
             o_mons[i] = self.embed_mons(mon)
+            o_hp[i] = mon.current_hp_fraction
+            o_mon_types[i] = self.embed_poke_type(mon)
             if mon.active:
                 o_active = i
 
@@ -207,7 +227,11 @@ class SimpleGen9RLPlayer(Gen9EnvSinglePlayer, SimpleRLPlayer):
         final_dict = {
             'events': events,
             'mons': mons,
+            'mon_types': mon_types,
+            'hp': hp,
             'o_mons': o_mons,
+            'o_mon_types': o_mon_types,
+            'o_hp': o_hp,
             'moves': moves
         }
         # pprint.pp(final_dict, compact=True)
@@ -220,13 +244,31 @@ class SimpleGen9RLPlayer(Gen9EnvSinglePlayer, SimpleRLPlayer):
             'events': MultiBinary(2),
             'mons': Box(high=np.ones((6, 1010)),
                         low=-np.ones((6, 1010)),
-                        dtype=np.int32),
+                        dtype=np.float32),
+
+            'mon_types': Box(high=np.ones((6, POKETYPECOUNT)),
+                             low=-np.ones((6, POKETYPECOUNT)),
+                             dtype=np.float32),
+
+            'hp': Box(high=np.ones(6),
+                      low=-np.ones(6),
+                      dtype=np.float32),
+
             'o_mons': Box(high=np.ones((6, 1010)),
                           low=-np.ones((6, 1010)),
-                          dtype=np.int32),
+                          dtype=np.float32),
+
+            'o_mon_types': Box(high=np.ones((6, POKETYPECOUNT)),
+                               low=-np.ones((6, POKETYPECOUNT)),
+                               dtype=np.float32),
+
+            'o_hp': Box(high=np.ones(6),
+                        low=-np.ones(6),
+                        dtype=np.float32),
+
             'moves': Box(high=np.ones((6, 4, 1000)),
-                          low=-np.ones((6, 4, 1000)),
-                          dtype=np.int32),
+                         low=-np.ones((6, 4, 1000)),
+                         dtype=np.float32),
         })
 
 
