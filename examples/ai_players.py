@@ -52,7 +52,7 @@ class SimpleRLPlayer(Gen8EnvSinglePlayer, SimpleHeuristicsPlayer):
             moves_base_power[i] = (
                     move.base_power / 100
             )  # Simple rescaling to facilitate learning
-            if move.type:
+            if move.type and move.category != MoveCategory.STATUS:
                 moves_dmg_multiplier[i] = ((1.5 if move.type in active.types else 1) *
                                            (p_ratio if move.category == MoveCategory.PHYSICAL else s_ratio) *
                                            move.accuracy *
@@ -150,7 +150,7 @@ class SimpleGen9RLPlayer(Gen9EnvSinglePlayer, SimpleRLPlayer):
 
     def calc_reward(self, last_battle, current_battle) -> float:
         return self.reward_computing_helper(
-            current_battle, fainted_value=4.0, hp_value=1.0, victory_value=30.0
+            current_battle, fainted_value=4.0, hp_value=2.25, victory_value=30.0
         )
 
     @staticmethod
@@ -232,7 +232,8 @@ class SimpleGen9RLPlayer(Gen9EnvSinglePlayer, SimpleRLPlayer):
             'o_mons': o_mons,
             'o_mon_types': o_mon_types,
             'o_hp': o_hp,
-            'moves': moves
+            'moves': moves,
+            'old': super().embed_battle(battle),
         }
         # pprint.pp(final_dict, compact=True)
         return final_dict
@@ -242,6 +243,7 @@ class SimpleGen9RLPlayer(Gen9EnvSinglePlayer, SimpleRLPlayer):
         # return MultiBinary(4)
         return Dict({
             'events': MultiBinary(2),
+
             'mons': Box(high=np.ones((6, 1010)),
                         low=-np.ones((6, 1010)),
                         dtype=np.float32),
@@ -269,6 +271,8 @@ class SimpleGen9RLPlayer(Gen9EnvSinglePlayer, SimpleRLPlayer):
             'moves': Box(high=np.ones((6, 4, 1000)),
                          low=-np.ones((6, 4, 1000)),
                          dtype=np.float32),
+
+            'old': super().describe_embedding(),
         })
 
 

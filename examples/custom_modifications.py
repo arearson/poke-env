@@ -241,8 +241,8 @@ async def main():
 
     batch_size = 256  # @param {type:"integer"}
     learning_rate = 1e-3  # @param {type:"number"}
-    epsilon_greedy = 0.1
-    gamma = 0.99
+    epsilon_greedy = 0.3
+    gamma = 0.8
     log_interval = 200  # @param {type:"integer"}
 
     num_atoms = 51  # @param {type:"integer"}
@@ -280,6 +280,7 @@ async def main():
         'o_mon_types': tf.keras.layers.Flatten(),
         'o_hp': tf.keras.layers.Dense(6),
         'moves': tf.keras.models.Sequential([tf.keras.layers.Flatten(), tf.keras.layers.Dense(32)]),
+        'old': tf.keras.layers.Flatten(),
     }
     preprocessing_combiner = tf.keras.layers.Concatenate(axis=-1)
 
@@ -345,7 +346,7 @@ async def main():
             else:
                 continue
             envs.reset_env(opponent=trainer)
-        for _ in range([128, 128, 64][trainers]):
+        for _ in range([128, 1024, 64][trainers]):
             for _ in range(512):
                 drivers.dynamic_step_driver.DynamicStepDriver(
                     env=train_env, policy=dqn.collect_policy,
@@ -397,23 +398,23 @@ async def main():
     # Reset env
     eval_env.envs[0].reset_env(restart=False)
 
-    # Evaluate the player with included util method
-    n_challenges = 250
-    placement_battles = 40
-    eval_task = background_evaluate_player(
-        eval_env.envs[0].agent, n_battles=n_challenges, n_placement_battles=placement_battles
-    )
-    # dqn.test(eval_env, nb_episodes=n_challenges, verbose=False, visualize=False)
-    driver_eval2 = drivers.dynamic_episode_driver.DynamicEpisodeDriver(
-        env=eval_env, policy=saved_policy, num_episodes=n_challenges - 2
-    )
-    driver_eval2.run()
-    time_step = eval_env.reset()
-    while not time_step.is_last():
-        time_step = eval_env.step(saved_policy.action(time_step))
-
-    print("Evaluation with included method:", eval_task.result())
-    eval_env.envs[0].reset_env(restart=False)
+    # # Evaluate the player with included util method
+    # n_challenges = 250
+    # placement_battles = 40
+    # eval_task = background_evaluate_player(
+    #     eval_env.envs[0].agent, n_battles=n_challenges, n_placement_battles=placement_battles
+    # )
+    # # dqn.test(eval_env, nb_episodes=n_challenges, verbose=False, visualize=False)
+    # driver_eval2 = drivers.dynamic_episode_driver.DynamicEpisodeDriver(
+    #     env=eval_env, policy=saved_policy, num_episodes=n_challenges - 2
+    # )
+    # driver_eval2.run()
+    # time_step = eval_env.reset()
+    # while not time_step.is_last():
+    #     time_step = eval_env.step(saved_policy.action(time_step))
+    #
+    # print("Evaluation with included method:", eval_task.result())
+    # eval_env.envs[0].reset_env(restart=False)
 
     # Cross evaluate the player with included util method
     n_challenges = 50
